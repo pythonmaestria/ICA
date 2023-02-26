@@ -111,7 +111,10 @@ def ica(X, iterations, tolerance=1e-5):
     
     return S, distances
 
+# Ejecuta la función ICA
 S, distances = ica(X_whiten, iterations=100)
+
+# Crear los archivos del resultado final
 wf.write('s1_predicted.wav', sampling_rate, S[0].astype(np.float32))
 wf.write('s2_predicted.wav', sampling_rate, S[1].astype(np.float32))
 
