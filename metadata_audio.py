@@ -7,7 +7,7 @@ from scipy.io import wavfile as wf
 
  
 
-f = sf.SoundFile('talk.wav')
+f = sf.SoundFile('music.wav')
 print('Talk samples = {}'.format(f.frames))
 print('sample rate = {}'.format(f.samplerate))
 print('channels = {}'.format(f.channels))
@@ -18,7 +18,7 @@ print('seconds = {}'.format(f.frames / f.samplerate))
 
 
 
-f = sf.SoundFile('success.wav')
+f = sf.SoundFile('talk.wav')
 print('Success samples = {}'.format(f.frames))
 print('sample rate = {}'.format(f.samplerate))
 print('channels = {}'.format(f.channels))
