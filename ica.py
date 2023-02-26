@@ -16,14 +16,20 @@ def mix_sources(sources):
     mixture = np.c_[[source for source in sources]]
     return mixture
 
+# Leemos los archivos
 _, s1 = wf.read(s1_file)
-
 sampling_rate, s2 = wf.read(s2_file)
+
+# Imprimimos las muestras
 print(s1.shape, s2.shape)
 
+# Mezclamos ambos audios y nos regresa una matriz que podemos procesar
 x = mix_sources([s1, s2[:s1.shape[0]]])
+# guardamos la mezcla procesada
 wf.write('./talk_and_music.wav', sampling_rate, x.mean(axis=0).astype(np.float32))
 
+
+# Imprimimos la gráfica de la muestra mezclada
 fig = plt.figure()
 for shape in x:
         plt.plot(shape)
