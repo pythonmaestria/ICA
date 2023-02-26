@@ -7,17 +7,13 @@ s1_file = "./talk.wav"
 s2_file = "./music.wav"
 
 
-def mix_sources(sources, apply_noise=False):
+def mix_sources(sources):
     for i in range(len(sources)):
         max_val = np.max(sources[i])
         if(max_val > 1 or np.min(sources[i]) < 1):
             sources[i] = sources[i] / (max_val / 2) - 0.5
             
     mixture = np.c_[[source for source in sources]]
-    
-    if(apply_noise):
-        mixture += 0.02 * np.random.normal(size=X.shape)
-        
     return mixture
 
 _, s1 = wf.read(s1_file)
@@ -25,7 +21,7 @@ _, s1 = wf.read(s1_file)
 sampling_rate, s2 = wf.read(s2_file)
 print(s1.shape, s2.shape)
 
-x = mix_sources([s1, s2[:s1.shape[0]]], False)
+x = mix_sources([s1, s2[:s1.shape[0]]])
 wf.write('./talk_and_music.wav', sampling_rate, x.mean(axis=0).astype(np.float32))
 
 fig = plt.figure()
