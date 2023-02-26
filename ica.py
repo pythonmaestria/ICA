@@ -3,7 +3,7 @@ from scipy.io import wavfile as wf
 import matplotlib.pyplot as plt
 
 np.random.seed(0)
-s1_file = "./success.wav"
+s1_file = "./talk.wav"
 s2_file = "./music.wav"
 
 
@@ -26,13 +26,12 @@ sampling_rate, s2 = wf.read(s2_file)
 print(s1.shape, s2.shape)
 
 x = mix_sources([s1, s2[:s1.shape[0]]], False)
-print(f'Shape of s1: {s1.shape}, s2: {s1.shape}, Linear Mix: {x.shape}')
 wf.write('./talk_and_music.wav', sampling_rate, x.mean(axis=0).astype(np.float32))
 
 fig = plt.figure()
 for shape in x:
         plt.plot(shape)
-plt.title("Mezcla de coctel")
+plt.title("Mezcla")
 fig.tight_layout()
 plt.show()
 
@@ -47,8 +46,6 @@ def whiten(x):
     D = np.diag(eigen_values)
     sqrt_inverse_D = np.sqrt(np.linalg.inv(D))
     x_whiten = eigen_vectors @ (sqrt_inverse_D @ (eigen_vectors.T @ x))
-    
-    print(f'Shape of Eigen Values: {eigen_values.shape}, Eigen Vectors: {eigen_vectors.shape}, Whitened Data: {x_whiten.shape}')
     
     return x_whiten, D, eigen_vectors
 
@@ -100,12 +97,15 @@ def ica(X, iterations, tolerance=1e-5):
                 
         W[i, :] = w
     S = np.dot(W, X)
+    plt.plot(S[0],'--', color='orange')
+    plt.title("Música")
+    fig.tight_layout()
+    plt.show()   
 
-    for shape in S:
-        plt.plot(shape)
-        plt.title("Música")
-        fig.tight_layout()
-        plt.show()   
+    plt.plot(S[1])
+    plt.title("Hablando")
+    fig.tight_layout()
+    plt.show()   
     
     return S, distances
 
